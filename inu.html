@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dear Ibnu Alkazim</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:'Quicksand',sans-serif;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+background:linear-gradient(135deg,#9ed8ff,#6fbfff);
+overflow:hidden;
+color:#1f4e79;
+text-align:center;
+}
+
+/* clouds */
+.cloud{
+position:absolute;
+background:white;
+border-radius:50px;
+opacity:.8;
+}
+
+.cloud:before,.cloud:after{
+content:"";
+position:absolute;
+background:white;
+border-radius:50%;
+}
+
+.cloud:before{width:60%;height:100%;top:-40%;left:10%}
+.cloud:after{width:50%;height:90%;top:-30%;left:45%}
+
+.c1{width:120px;height:40px;top:20%;left:-150px;animation:cloudMove 45s linear infinite}
+.c2{width:160px;height:50px;top:60%;left:-200px;animation:cloudMove 60s linear infinite}
+.c3{width:100px;height:35px;top:40%;left:-120px;animation:cloudMove 35s linear infinite}
+
+@keyframes cloudMove{
+from{transform:translateX(0)}
+to{transform:translateX(120vw)}
+}
+
+/* sparkle */
+.sparkle{
+position:absolute;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:sparkle 3s infinite ease-in-out;
+opacity:.8;
+}
+
+@keyframes sparkle{
+0%{transform:scale(0);opacity:0}
+50%{transform:scale(1.3);opacity:1}
+100%{transform:scale(0);opacity:0}
+}
+
+/* envelope */
+#envelopeScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(135deg,#9ed8ff,#6fbfff);
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:5;
+}
+
+.envelope{
+width:160px;
+height:110px;
+background:white;
+position:relative;
+border-radius:6px;
+cursor:pointer;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+transition:.3s;
+}
+
+.envelope:hover{transform:scale(1.05)}
+
+.flap{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#f0f0f0;
+clip-path:polygon(0 0,100% 0,50% 60%);
+transform-origin:top;
+transition:.6s;
+}
+
+.envelope.open .flap{transform:rotateX(180deg)}
+
+.openText{margin-top:20px;font-size:14px;opacity:.9}
+
+/* main */
+#mainContent{
+display:none;
+flex-direction:column;
+align-items:center;
+animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+h1{
+font-family:'Pacifico',cursive;
+font-size:52px;
+margin-bottom:10px;
+opacity:0;
+color:#1f4e79;
+}
+
+.letter-sub{
+font-family:'Quicksand',sans-serif;
+font-size:22px;
+margin-bottom:30px;
+opacity:0;
+color:#2f6c9e;
+}
+
+.menu button{
+padding:14px 28px;
+margin:8px;
+border:none;
+border-radius:14px;
+font-size:18px;
+cursor:pointer;
+background:white;
+color:#2f6c9e;
+transition:.3s;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+.menu button:hover{transform:scale(1.1)}
+
+/* popup */
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+.popup-content{
+background:linear-gradient(135deg,#9ed8ff,#6fbfff);
+padding:28px;
+border-radius:18px;
+width:85%;
+max-width:420px;
+animation:popCute .45s ease;
+box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+@keyframes popCute{
+0%{transform:scale(.6) rotate(-6deg);opacity:0}
+60%{transform:scale(1.05) rotate(2deg)}
+100%{transform:scale(1) rotate(0);opacity:1}
+}
+
+.back{
+margin-top:25px;
+padding:10px 22px;
+border:none;
+border-radius:10px;
+background:white;
+color:#2f6c9e;
+font-weight:bold;
+cursor:pointer;
+}
+
+.quote{
+font-size:20px;
+margin-top:15px;
+min-height:60px;
+}
+
+</style>
+</head>
+
+<body>
+
+    <!-- clouds -->
+<div class="cloud c1"></div>
+<div class="cloud c2"></div>
+<div class="cloud c3"></div>
+
+<!-- sparkle -->
+<div class="sparkle" style="top:20%;left:10%"></div>
+<div class="sparkle" style="top:30%;left:80%"></div>
+<div class="sparkle" style="top:70%;left:20%"></div>
+<div class="sparkle" style="top:60%;left:70%"></div>
+
+<!-- envelope -->
+<div id="envelopeScreen">
+<div class="envelope" onclick="openLetter()">
+<div class="flap"></div>
+</div>
+<div class="openText">tap the envelope</div>
+</div>
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mp3">
+</audio>
+
+<div id="mainContent">
+
+<h1 id="title">Dear&nbsp;Ibnu&nbsp;Alkazim</h1>
+<div class="letter-sub" id="subtitle">a&nbsp;small&nbsp;letter&nbsp;for&nbsp;u</div>
+
+<div class="menu">
+<button onclick="openPopup('about')">abt u</button>
+<button onclick="openPopup('motivation')">faitoo</button>
+<button onclick="openPopup('thanks')">tysm</button>
+</div>
+
+</div>
+
+<!-- ABOUT -->
+<div class="popup" id="about">
+<div class="popup-content">
+<h2>about u</h2>
+<ul style="text-align:left;line-height:1.8;font-size:16px;padding-left:18px">
+<li><b>ur birthday</b><br>08th february 2007</li>
+
+<li><b>top 5 in ur life</b><br>
+1. gaming gear<br>
+2. games<br>
+3. anything abt psychology and filsuf stuff<br>
+4. mama irianti<br>
+5. steinsgate
+</li>
+
+<li><b>fav foods</b><br>
+- ramen<br>
+- kare<br>
+- shrimp
+</li>
+
+<li><b>fav drinks</b><br>
+- strawberry milk (greenfields)<br>
+- coffee<br>
+- pocari ion
+</li>
+
+<li><b>anything else (in my opinion)</b><br>
+blue, strawberry cheesecake, shiba inu, monochrome, avicenna, mykonos, interstellar, physical touch, inuyasha, resident evil, cola zero sugar, keshi, frank sinatra, atlus and sega, etc :p
+</li>
+</ul>
+<button class="back" onclick="closePopup('about')">Back</button>
+</div>
+</div>
+
+<!-- MOTIVATION -->
+<div class="popup" id="motivation">
+<div class="popup-content">
+<h2>faitoo!!</h2>
+<div class="quote" id="quote"></div>
+<button class="back" onclick="closePopup('motivation')">Back</button>
+</div>
+</div>
+
+<!-- THANKS -->
+<div class="popup" id="thanks">
+<div class="popup-content">
+<h2>thankyou for everything</h2>
+<p>i’m truly grateful to have met u again after everything and thankyouu so much for everything u’ve done to me, especially ur love and my mental health. it really means a lot to me and i really appreciate that, lov lov. i can’t imagine how things would’ve turned out if u had never been in my life.. karna kamu bener bener ngebantu akuu bgt buat mahamin apa yang salah dari diri aku, perasaan aku, pikiran aku. even kamu punya banyak struggle di pikiran kamu, tapi kamu masih bisa bantu aku buat jadi lebih baik untuk kedepannya. thankyou for genuinely caring abt me. last but not least.. as i always said, i love u so much ibnu alkazim. thankyou for coming into my life as "ibnu alkazim" </p>
+<button class="back" onclick="closePopup('thanks')">Back</button>
+</div>
+</div>
+
+<script>
+
+const quotes=[
+"u're stronger than u think.",
+"u've done ur best, inu.",
+"don't forget to get some proper rest.",
+"u're my favorite person.",
+"thankyou for holding on and fighting this far.",
+"issokaayy to feel tired.",
+"great things begin with small acts of courage.",
+"don't forget to be proud of urself every single day.",
+"i know u can do it!!",
+"i'll always be proud of u and always support u."
+]
+
+function typeText(text,element,speed=40){
+let i=0
+
+element.innerHTML=""
+
+let typing=setInterval(()=>{
+
+if(i<text.length){
+element.innerHTML+=text.charAt(i)
+i++
+}
+
+else{
+clearInterval(typing)
+}
+
+},speed)
+}
+
+function randomQuote(){
+const quoteEl=document.getElementById("quote")
+const randomIndex=Math.floor(Math.random()*quotes.length)
+typeText(quotes[randomIndex],quoteEl)
+}
+
+function openPopup(id){
+const el=document.getElementById(id)
+el.style.display="flex"
+if(id==="motivation"){randomQuote()}
+}
+
+function closePopup(id){document.getElementById(id).style.display="none"}
+
+function openLetter(){
+const env=document.querySelector(".envelope")
+env.classList.add("open")
+
+setTimeout(()=>{
+
+document.getElementById("envelopeScreen").style.display="none"
+
+const main=document.getElementById("mainContent")
+main.style.display="flex"
+
+const music=document.getElementById("music")
+music.play()
+
+animateTitle()
+
+},700)
+}
+
+function animateTitle(){
+const title=document.getElementById("title")
+const subtitle=document.getElementById("subtitle")
+
+let titleText=title.innerText
+let subText=subtitle.innerText
+
+title.innerText=""
+subtitle.innerText=""
+
+title.style.opacity=1
+subtitle.style.opacity=1
+
+let i=0
+
+let typingTitle=setInterval(()=>{
+if(i<titleText.length){
+title.innerText+=titleText.charAt(i)
+i++
+}
+else{
+clearInterval(typingTitle)
+let j=0
+let typingSub=setInterval(()=>{
+if(j<subText.length){
+subtitle.innerText+=subText.charAt(j)
+j++
+}
+else{clearInterval(typingSub)}
+},70)
+}
+},80)
+}
+
+</script>
+
+</body>
+</html>
